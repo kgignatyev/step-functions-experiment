@@ -27,7 +27,7 @@ class ActivityImplementation(val sfnClient: SfnClient, val gson: Gson)  {
             val request: GetActivityTaskRequest = GetActivityTaskRequest.builder()
                     .activityArn("arn:aws:states:us-west-2:471443061462:activity:${activityName}")
                     .workerName("qds")
-                    .overrideConfiguration { it.apiCallAttemptTimeout(Duration.ofSeconds(5)) }
+                    .overrideConfiguration { it.apiCallAttemptTimeout(Duration.ofSeconds(2)) }
                     .build()
 
             var taskResponse = sfnClient.getActivityTask(request)
@@ -75,7 +75,9 @@ class ActivityImplementation(val sfnClient: SfnClient, val gson: Gson)  {
         val fileGroup = JsonObject()
         val jsonArray = JsonArray()
         for(  i in 1.. numFilesToExpect){
-            jsonArray.add( "file-$i-of-$numFilesToExpect-group-${groupId}" )
+            val fileO = JsonObject()
+            fileO.addProperty("id", "file-$i-of-$numFilesToExpect-group-${groupId}")
+            jsonArray.add( fileO )
         }
         fileGroup.add("files", jsonArray)
         res.add("fileGroup", fileGroup)

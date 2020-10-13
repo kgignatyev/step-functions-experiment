@@ -13,26 +13,29 @@
           "Wait For File": {
             "Type": "Task",
             "Resource": "arn:aws:states:us-west-2:471443061462:activity:FileArrivalListener",
-            "Next": "Validate"
+            "Next": "Validate",
+            "ResultPath": "$.srcFile"
           },
           "Validate": {
             "Type": "Task",
             "Resource": "arn:aws:states:us-west-2:471443061462:activity:ValidateFile",
-            "Next": "Load"
+            "Next": "Load",
+            "ResultPath": "$.validateResult"
           },
           "Load": {
             "Type": "Task",
             "Resource": "arn:aws:states:us-west-2:471443061462:activity:LoadFile",
+            "ResultPath": "$.loadResult",
             "End": true
           }
         }
       },
-      "ResultPath": "$.detail.shipped",
+      "ResultPath": "$.resulst",
       "Next": "Evaluate Group"
     },
     "Evaluate Group": {
       "Type": "Pass",
-      "Result": "World",
+      "Result": "Done",
       "End": true
     }
   }

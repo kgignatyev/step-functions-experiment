@@ -1,0 +1,4 @@
+{
+  "valid": "s3://b/valid/k3",
+  "errors": "s3://b/errors/k3"
+}

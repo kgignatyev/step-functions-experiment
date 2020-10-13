@@ -1,0 +1,39 @@
+{
+  "Comment": "FileGroupProcessing",
+  "StartAt": "ProcessAllFiles",
+  "States": {
+    "ProcessAllFiles": {
+      "Type": "Map",
+      "InputPath": "$.fileGroup",
+      "ItemsPath": "$.files",
+      "MaxConcurrency": 0,
+      "Iterator": {
+        "StartAt": "Wait For File",
+        "States": {
+          "Wait For File": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:us-west-2:471443061462:activity:FileArrivalListener",
+            "Next": "Validate"
+          },
+          "Validate": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:us-west-2:471443061462:activity:ValidateFile",
+            "Next": "Load"
+          },
+          "Load": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:us-west-2:471443061462:activity:LoadFile",
+            "End": true
+          }
+        }
+      },
+      "ResultPath": "$.detail.shipped",
+      "Next": "Evaluate Group"
+    },
+    "Evaluate Group": {
+      "Type": "Pass",
+      "Result": "World",
+      "End": true
+    }
+  }
+}

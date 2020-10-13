@@ -23,7 +23,7 @@ for file waiting
 
 after sending all or some responses we can read list of current tasks     
 
-    ./gradlew run --args='read' |tee tasks.txt  
+    ./gradlew run --args='read' |tee tasks2.txt  
     
     
 for file validated

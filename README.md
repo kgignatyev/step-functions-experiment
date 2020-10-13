@@ -18,7 +18,12 @@ Now we can respond to the tasks by sending response
     
 for file waiting
 
-    ./gradlew run --args='send <token> src/responses/file-arrived.json' 
+    ./gradlew run --args='send <token> src/responses/file-arrived.json'
+    
+
+after sending all or some responses we can read list of current tasks     
+
+    ./gradlew run --args='read' |tee tasks.txt  
     
     
 for file validated
